@@ -1,0 +1,13 @@
+[project]
+name = "thislink"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = ["fastapi[standard]>=0.115.12"]
+
+[tool.ruff]
+line-length = 100
+lint.select = ["ALL"]
+lint.ignore = ["D"]
+
+[tool.pyright]
+typeCheckingMode = "strict"
