@@ -1,7 +1,8 @@
 import json
 from pathlib import Path
 
-DB_FILE = Path("links.db")
+DATA_DIR = Path("data")
+DB_FILE = DATA_DIR / "links.db"
 
 
 class LinkStore:
@@ -29,6 +30,7 @@ class LinkStore:
             raise RuntimeError(msg)
 
         if not DB_FILE.exists():
+            DATA_DIR.mkdir()
             DB_FILE.touch()
 
         text = DB_FILE.read_text()
