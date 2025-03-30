@@ -30,7 +30,7 @@ class LinkStore:
             raise RuntimeError(msg)
 
         if not DB_FILE.exists():
-            DATA_DIR.mkdir()
+            DATA_DIR.mkdir(exist_ok=True)
             DB_FILE.touch()
 
         text = DB_FILE.read_text()
