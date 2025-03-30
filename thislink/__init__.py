@@ -8,9 +8,11 @@ from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import HttpUrl
 
+from thislink.store import LinkStore
+
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
-links: dict[str, str] = {}
+link_store = LinkStore()
 
 
 @app.get("/")
@@ -21,7 +23,7 @@ def index(request: Request) -> Response:
 @app.get("/{link_id}")
 def get(request: Request, link_id: str) -> Response:
     try:
-        return RedirectResponse(links[link_id], HTTPStatus.SEE_OTHER)
+        return RedirectResponse(link_store[link_id], HTTPStatus.SEE_OTHER)
     except KeyError:
         return render_template(request, "index", {"error": "Unknown link"})
 
@@ -29,7 +31,7 @@ def get(request: Request, link_id: str) -> Response:
 @app.post("/")
 def create(request: Request, url: Annotated[HttpUrl, Form(embed=True)]) -> Response:
     link_id = token_urlsafe(6)
-    links[link_id] = str(url)
+    link_store[link_id] = str(url)
     return render_template(
         request,
         "index",
