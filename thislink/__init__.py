@@ -30,7 +30,11 @@ def get(request: Request, link_id: str) -> Response:
 def create(request: Request, url: Annotated[HttpUrl, Form(embed=True)]) -> Response:
     link_id = token_urlsafe(6)
     links[link_id] = str(url)
-    return render_template(request, "index", {"shortened": f"/{link_id}"})
+    return render_template(
+        request,
+        "index",
+        {"shortened": f"{request.base_url}{link_id}", "original": str(url)},
+    )
 
 
 @app.exception_handler(RequestValidationError)
@@ -46,4 +50,4 @@ def render_template(
     name: str,
     context: dict[str, Any] | None = None,
 ) -> Response:
-    return templates.TemplateResponse(request, f"{name}.html.jinja", context)
+    return templates.TemplateResponse(request, f"{name}.html.jinja", context or {})
