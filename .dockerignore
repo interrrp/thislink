@@ -128,7 +128,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
@@ -175,4 +174,3 @@ cython_debug/
 
 # Data
 data/
-stack.env
