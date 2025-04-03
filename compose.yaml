@@ -8,4 +8,4 @@ services:
       - .env
       - stack.env
     ports:
-      - ${THISLINK_PORT}:${THISLINK_PORT}
+      - ${THISLINK_PORT:-8000}:${THISLINK_PORT:-8000}
